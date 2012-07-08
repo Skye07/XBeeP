@@ -141,10 +141,12 @@ namespace XBeeP
 					ctl.FillForm(ip, vref/resolution);
 					frPanel.Controls.Add(ctl);
 					
-					byte[] hex = (ip).getFrameHex();
+                    ArrayList hex = ip.getHex();
 					foreach (byte b in hex)
 						hexTxtbox.Text += "" + b.ToString("X").PadLeft(2, '0') + " ";
-					asciiTxtbox.Text = (ip).getFrameASCII();
+                    foreach (byte b in hex)
+                        asciiTxtbox.Text += "" + System.Convert.ToChar(System.Convert.ToUInt32(""+b, 16)).ToString() + " ";
+
 					break;
 
 				case FrameType.InputLine64:

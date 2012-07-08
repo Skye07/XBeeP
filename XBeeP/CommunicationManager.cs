@@ -394,6 +394,7 @@ namespace XBeeP
         void comPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             byte[] incByte = new byte[3];
+            int checksum = 0;
 
             if (comPort.BytesToRead > 0)
             {
@@ -402,12 +403,16 @@ namespace XBeeP
                 if(incByte[0] == 0x7E)
                 {
                     frameNr++;
-                    int byteCount = 0;
-                    byteCount += comPort.Read(incByte, 0, 3) - 2;
-                    int length = (incByte[1] + (incByte[0] << 8));
-                    while (comPort.BytesToRead < length) ; // Wait until enough bytes have arrived
+                    comPort.Read(incByte, 0, 3);
+                    int length = (incByte[1] + (incByte[0] << 8)) ; // Payload length + checksum byte
 
-                    switch (incByte[2])
+                    while (comPort.BytesToRead < length)
+                        System.Threading.Thread.Sleep(50); // Wait until enough bytes have arrived
+
+                    byte[] fbytes = new byte[length];
+                    comPort.Read(fbytes, 0, length);
+
+                    switch (incByte[2]) // Test the API identifier
                     {
                         case (byte)FrameType.ATCommand:
                             break;
@@ -418,45 +423,49 @@ namespace XBeeP
 
                         case (byte)FrameType.InputLine16:
                             InputLine16 inframe = new InputLine16(this.frameNr, FrameType.InputLine16, length);
-                            byteCount += comPort.Read(incByte, 0, 3);
-                            inframe.SourceAddress = (incByte[1] + (incByte[0] << 8));
-                            inframe.Rssi = incByte[2];
+                            inframe.addHex(0x7E);
+                            foreach(byte b in incByte)
+                                inframe.addHex(b);
+                            foreach(byte b in fbytes)
+                                inframe.addHex(b);
+                            inframe.SourceAddress = (fbytes[1] + (fbytes[0] << 8));
+                            inframe.Rssi = fbytes[2];
+                            inframe.Broadcast = fbytes[3];
+                            inframe.SampleAmount = fbytes[4];
+                            inframe.AdcStatus = (byte)(fbytes[5] >> 1); //Bitshift to remove the D8
+                            inframe.DioStatus = fbytes[6];
 
-                            byteCount += comPort.Read(incByte, 0, 2);
-
-                            inframe.Broadcast = incByte[0];
-                            inframe.SampleAmount = incByte[1];
-
-                            byteCount += comPort.Read(incByte, 0, 2);
-                            inframe.AdcStatus = (byte)(incByte[0] >> 1); //Bitshift to remove the D8
-                            inframe.DioStatus = incByte[1];
-
+                            int bcount = 8;
                             if (inframe.DioStatus > 0)
                             {
-                                byteCount += comPort.Read(incByte, 0, 2);
-                                inframe.DioVal = incByte[1]; // MSB is zero as D8 is unused in current FW
+                                inframe.DioVal = fbytes[bcount++]; // MSB is zero as D8 is unused in current FW
                             }
 
                             if (inframe.AdcStatus > 0)
                             {
                                 for (int i = 0; i <= 5; i++)
                                 {
-                                    if(((inframe.AdcStatus & (1 << i)) != 0))
+                                    if((inframe.AdcStatus & (1 << i)) != 0)
                                     {
-                                        byteCount += comPort.Read(incByte, 0, 2);
-                                        inframe.setAdcVal(i, incByte[1] + (incByte[0] << 8));
+                                        inframe.setAdcVal(i, fbytes[bcount+1] + (fbytes[bcount] << 8));
+                                        bcount += 2;
                                     }
                                 }
                             }
+                            inframe.Checksum = fbytes[bcount];
 
-                            //if (inframe.Length != byteCount) // Doesn't hurt to check if we get the correct amount of bytes
-                            //    throw new Exception("Invalid byte count! Expected " + inframe.Length + " bytes but read " + byteCount);
+                            checksum += incByte[2];
+                            for (int i = 0; i < fbytes.Length-1; i++)
+                                checksum += fbytes[i];
+                            int res = 0xFF - (checksum & 0xFF);
 
-                            comPort.Read(incByte, 0, 1);
-                            inframe.Checksum = incByte[0];
-
-                            Frames.Add(inframe);
-                            newCompleteFrame(this, new DataEventArgs(inframe));
+                            if (res == inframe.Checksum)
+                            {
+                                Frames.Add(inframe);
+                                newCompleteFrame(this, new DataEventArgs(inframe));
+                            }
+                            else
+                                Console.Write("CHECKSUM FAILED! Got " + inframe.Checksum + " while expecting " + res);
                             break;
 
                         case (byte)FrameType.InputLine64:

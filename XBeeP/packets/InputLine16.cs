@@ -64,8 +64,6 @@ namespace XBeeP.packets
             else
                 return -1;
 
-
-
         }
         public void setAdcVal(int channel, int value)
         {
@@ -114,18 +112,6 @@ namespace XBeeP.packets
         {
             return this.Type + " - Source: " + this.SourceAddress.ToString("X");
         }
-
-        public byte[] getFrameHex() //TODO
-        {
-            byte[] hex = new byte[] {(byte)0x7E, 0, (byte)Length,  (byte)FrameType.InputLine16, Rssi, 0, SampleAmount, AdcStatus, DioStatus, 0, DioVal};
-            return hex;
-        }
-
-        public String getFrameASCII()
-        {
-            return "TODO";
-        }
-
 
     }
 }

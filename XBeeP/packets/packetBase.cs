@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Collections;
 
 namespace XBeeP.packets
 {
@@ -15,6 +16,7 @@ namespace XBeeP.packets
             get { return frameNumber; }
             private set { frameNumber = value; }
         }
+
         private int length;
 
         public int Length
@@ -48,11 +50,24 @@ namespace XBeeP.packets
             set { type = value; }
         }
 
+        private ArrayList hex = new ArrayList();
+
+        public ArrayList getHex()
+        {
+            return hex;
+        }
+
+        public void addHex(byte val)
+        {
+            hex.Add(val);
+        }
+
+
         #endregion
 
-public packetBase()
-        {
-        }
+        public packetBase()
+                {
+                }
 
         public packetBase(int frameNumber, FrameType type, int length, byte checksum, DateTime recTime)
         {
