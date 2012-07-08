@@ -120,7 +120,6 @@ namespace XBeeP
 			frameNrInfoLbl.Text = ""+p.FrameNumber;
 			lengthInfoLbl.Text = "" + p.Length;
 			checksumInfoLbl.Text = "" + p.Checksum;
-			verifySumInfoLbl.Text = "...";
 			typeInfoLbl.Text = "" + p.Type;
 			recTimeInfoLbl.Text = ""+p.RecTime;
 			hexTxtbox.Clear();
@@ -226,7 +225,7 @@ namespace XBeeP
 
 		private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show("XBeeP - Copyright 2012 Devon Kerkhove\nhttp://devon.skyon.be\ndevon@skyon.be", "XBeeP 0.2");
+			MessageBox.Show("XBeeP - Copyright 2012 Devon Kerkhove\nhttp://www.0xD.be\ndevon@skyon.be", "XBeeP 0.2");
 		}
 
 		private void sendFrameBtn_Click(object sender, EventArgs e)

@@ -57,14 +57,13 @@ namespace XBeeP
             this.cboPort = new System.Windows.Forms.ComboBox();
             this.cmdToggle = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.scrollChk = new System.Windows.Forms.CheckBox();
             this.frameInfoGrp = new System.Windows.Forms.GroupBox();
             this.frPanel = new System.Windows.Forms.Panel();
             this.basicInfoGrp = new System.Windows.Forms.GroupBox();
             this.vrefUpDown = new System.Windows.Forms.NumericUpDown();
-            this.verifySumInfoLbl = new System.Windows.Forms.Label();
             this.vrefLabel = new System.Windows.Forms.Label();
             this.resolutionUpDown = new System.Windows.Forms.NumericUpDown();
-            this.verifySumLbl = new System.Windows.Forms.Label();
             this.resolutionLbl = new System.Windows.Forms.Label();
             this.checksumInfoLbl = new System.Windows.Forms.Label();
             this.checksumLbl = new System.Windows.Forms.Label();
@@ -82,19 +81,18 @@ namespace XBeeP
             this.asciiLbl = new System.Windows.Forms.Label();
             this.hexLbl = new System.Windows.Forms.Label();
             this.lstFrames = new System.Windows.Forms.ListBox();
-            this.scrollChk = new System.Windows.Forms.CheckBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.sendStatusLbl = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.frameTypeCombo = new System.Windows.Forms.ComboBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.sendFrameBtn = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.asciiOutTxt = new System.Windows.Forms.TextBox();
             this.hexOutTxt = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.sendFrameBtn = new System.Windows.Forms.Button();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.frameTypeCombo = new System.Windows.Forms.ComboBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.sendStatusLbl = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -108,8 +106,8 @@ namespace XBeeP
             ((System.ComponentModel.ISupportInitialize)(this.resolutionUpDown)).BeginInit();
             this.rawInputGrp.SuspendLayout();
             this.tabPage3.SuspendLayout();
-            this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -136,7 +134,7 @@ namespace XBeeP
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -157,7 +155,7 @@ namespace XBeeP
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -410,6 +408,18 @@ namespace XBeeP
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Incoming Packets";
             // 
+            // scrollChk
+            // 
+            this.scrollChk.AutoSize = true;
+            this.scrollChk.Checked = true;
+            this.scrollChk.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.scrollChk.Location = new System.Drawing.Point(108, 419);
+            this.scrollChk.Name = "scrollChk";
+            this.scrollChk.Size = new System.Drawing.Size(77, 17);
+            this.scrollChk.TabIndex = 3;
+            this.scrollChk.Text = "Auto Scroll";
+            this.scrollChk.UseVisualStyleBackColor = true;
+            // 
             // frameInfoGrp
             // 
             this.frameInfoGrp.Controls.Add(this.frPanel);
@@ -432,10 +442,8 @@ namespace XBeeP
             // basicInfoGrp
             // 
             this.basicInfoGrp.Controls.Add(this.vrefUpDown);
-            this.basicInfoGrp.Controls.Add(this.verifySumInfoLbl);
             this.basicInfoGrp.Controls.Add(this.vrefLabel);
             this.basicInfoGrp.Controls.Add(this.resolutionUpDown);
-            this.basicInfoGrp.Controls.Add(this.verifySumLbl);
             this.basicInfoGrp.Controls.Add(this.resolutionLbl);
             this.basicInfoGrp.Controls.Add(this.checksumInfoLbl);
             this.basicInfoGrp.Controls.Add(this.checksumLbl);
@@ -478,15 +486,6 @@ namespace XBeeP
             65536});
             this.vrefUpDown.ValueChanged += new System.EventHandler(this.vrefUpDown_ValueChanged);
             // 
-            // verifySumInfoLbl
-            // 
-            this.verifySumInfoLbl.AutoSize = true;
-            this.verifySumInfoLbl.Location = new System.Drawing.Point(195, 60);
-            this.verifySumInfoLbl.Name = "verifySumInfoLbl";
-            this.verifySumInfoLbl.Size = new System.Drawing.Size(27, 13);
-            this.verifySumInfoLbl.TabIndex = 17;
-            this.verifySumInfoLbl.Text = "N/A";
-            // 
             // vrefLabel
             // 
             this.vrefLabel.AutoSize = true;
@@ -518,15 +517,6 @@ namespace XBeeP
             0,
             0});
             this.resolutionUpDown.ValueChanged += new System.EventHandler(this.resolutionUpDown_ValueChanged);
-            // 
-            // verifySumLbl
-            // 
-            this.verifySumLbl.AutoSize = true;
-            this.verifySumLbl.Location = new System.Drawing.Point(136, 60);
-            this.verifySumLbl.Name = "verifySumLbl";
-            this.verifySumLbl.Size = new System.Drawing.Size(50, 13);
-            this.verifySumLbl.TabIndex = 16;
-            this.verifySumLbl.Text = "Verify CS";
             // 
             // resolutionLbl
             // 
@@ -681,18 +671,6 @@ namespace XBeeP
             this.lstFrames.TabIndex = 0;
             this.lstFrames.SelectedIndexChanged += new System.EventHandler(this.lstFrames_SelectedIndexChanged);
             // 
-            // scrollChk
-            // 
-            this.scrollChk.AutoSize = true;
-            this.scrollChk.Checked = true;
-            this.scrollChk.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.scrollChk.Location = new System.Drawing.Point(108, 419);
-            this.scrollChk.Name = "scrollChk";
-            this.scrollChk.Size = new System.Drawing.Size(77, 17);
-            this.scrollChk.TabIndex = 3;
-            this.scrollChk.Text = "Auto Scroll";
-            this.scrollChk.UseVisualStyleBackColor = true;
-            // 
             // tabPage3
             // 
             this.tabPage3.BackColor = System.Drawing.Color.Transparent;
@@ -708,6 +686,62 @@ namespace XBeeP
             this.tabPage3.Size = new System.Drawing.Size(680, 464);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Send Packets";
+            // 
+            // sendStatusLbl
+            // 
+            this.sendStatusLbl.AutoSize = true;
+            this.sendStatusLbl.Location = new System.Drawing.Point(96, 253);
+            this.sendStatusLbl.Name = "sendStatusLbl";
+            this.sendStatusLbl.Size = new System.Drawing.Size(0, 13);
+            this.sendStatusLbl.TabIndex = 7;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(23, 9);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(63, 13);
+            this.label9.TabIndex = 6;
+            this.label9.Text = "Frame Type";
+            // 
+            // frameTypeCombo
+            // 
+            this.frameTypeCombo.FormattingEnabled = true;
+            this.frameTypeCombo.Location = new System.Drawing.Point(92, 6);
+            this.frameTypeCombo.Name = "frameTypeCombo";
+            this.frameTypeCombo.Size = new System.Drawing.Size(143, 21);
+            this.frameTypeCombo.TabIndex = 5;
+            this.frameTypeCombo.Text = "Select a frame type";
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.label8);
+            this.groupBox5.Location = new System.Drawing.Point(11, 108);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(464, 135);
+            this.groupBox5.TabIndex = 4;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Frame Assembly";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(18, 27);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(60, 13);
+            this.label8.TabIndex = 0;
+            this.label8.Text = "Destination";
+            // 
+            // sendFrameBtn
+            // 
+            this.sendFrameBtn.Enabled = false;
+            this.sendFrameBtn.Location = new System.Drawing.Point(11, 249);
+            this.sendFrameBtn.Name = "sendFrameBtn";
+            this.sendFrameBtn.Size = new System.Drawing.Size(79, 20);
+            this.sendFrameBtn.TabIndex = 3;
+            this.sendFrameBtn.Text = "Send Frame";
+            this.sendFrameBtn.UseVisualStyleBackColor = true;
+            this.sendFrameBtn.Click += new System.EventHandler(this.sendFrameBtn_Click);
             // 
             // groupBox4
             // 
@@ -755,62 +789,6 @@ namespace XBeeP
             this.label7.TabIndex = 0;
             this.label7.Text = "Hex";
             // 
-            // sendFrameBtn
-            // 
-            this.sendFrameBtn.Enabled = false;
-            this.sendFrameBtn.Location = new System.Drawing.Point(11, 249);
-            this.sendFrameBtn.Name = "sendFrameBtn";
-            this.sendFrameBtn.Size = new System.Drawing.Size(79, 20);
-            this.sendFrameBtn.TabIndex = 3;
-            this.sendFrameBtn.Text = "Send Frame";
-            this.sendFrameBtn.UseVisualStyleBackColor = true;
-            this.sendFrameBtn.Click += new System.EventHandler(this.sendFrameBtn_Click);
-            // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.label8);
-            this.groupBox5.Location = new System.Drawing.Point(11, 108);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(464, 135);
-            this.groupBox5.TabIndex = 4;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Frame Assembly";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(18, 27);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(60, 13);
-            this.label8.TabIndex = 0;
-            this.label8.Text = "Destination";
-            // 
-            // frameTypeCombo
-            // 
-            this.frameTypeCombo.FormattingEnabled = true;
-            this.frameTypeCombo.Location = new System.Drawing.Point(92, 6);
-            this.frameTypeCombo.Name = "frameTypeCombo";
-            this.frameTypeCombo.Size = new System.Drawing.Size(143, 21);
-            this.frameTypeCombo.TabIndex = 5;
-            this.frameTypeCombo.Text = "Select a frame type";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(23, 9);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(63, 13);
-            this.label9.TabIndex = 6;
-            this.label9.Text = "Frame Type";
-            // 
-            // sendStatusLbl
-            // 
-            this.sendStatusLbl.AutoSize = true;
-            this.sendStatusLbl.Location = new System.Drawing.Point(96, 253);
-            this.sendStatusLbl.Name = "sendStatusLbl";
-            this.sendStatusLbl.Size = new System.Drawing.Size(0, 13);
-            this.sendStatusLbl.TabIndex = 7;
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -844,10 +822,10 @@ namespace XBeeP
             this.rawInputGrp.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -896,8 +874,6 @@ namespace XBeeP
         private System.Windows.Forms.TextBox hexTxtbox;
         private System.Windows.Forms.Label asciiLbl;
         private System.Windows.Forms.Label hexLbl;
-        private System.Windows.Forms.Label verifySumInfoLbl;
-        private System.Windows.Forms.Label verifySumLbl;
         private System.Windows.Forms.Label checksumInfoLbl;
         private System.Windows.Forms.Label checksumLbl;
         private System.Windows.Forms.Label typeInfoLbl;
